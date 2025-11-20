@@ -4,16 +4,16 @@ FROM eclipse-temurin:17-jdk
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml from your project folder
-COPY Ecommerce/mvnw ./
-COPY Ecommerce/pom.xml ./
-COPY Ecommerce/.mvn .mvn
+# Copy Maven wrapper and pom.xml from current folder
+COPY mvnw ./
+COPY pom.xml ./
+COPY .mvn .mvn
 
 # Give execute permission to mvnw
 RUN chmod +x mvnw
 
 # Copy source code
-COPY Ecommerce/src src
+COPY src src
 
 # Build the project inside Docker
 RUN ./mvnw clean package -DskipTests

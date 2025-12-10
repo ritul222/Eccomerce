@@ -57,11 +57,22 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
-    public List<AddressDTO> getUserAddresses(User user) {
-        List<Address>addresses=user.getAddresses();
-        List<AddressDTO>addressDTOS= addresses.stream().map(address -> modelMapper.map(address,AddressDTO.class)).collect(Collectors.toList());
-        return addressDTOS;
+    public List<AddressDTO> getUserAddresses(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        return user.getAddresses()
+                .stream()
+                .map(address -> modelMapper.map(address, AddressDTO.class))
+                .collect(Collectors.toList());
     }
+
+
+//    public List<AddressDTO> getUserAddresses(User user) {
+//        List<Address>addresses=user.getAddresses();
+//        List<AddressDTO>addressDTOS= addresses.stream().map(address -> modelMapper.map(address,AddressDTO.class)).collect(Collectors.toList());
+//        return addressDTOS;
+//    }
 
     @Override
     public AddressDTO updateAddressById(Long addressId, AddressDTO addressDTO) {

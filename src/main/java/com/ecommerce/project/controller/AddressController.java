@@ -45,11 +45,10 @@ public class AddressController {
     }
 
     @GetMapping("/users/addresses")
-    public ResponseEntity<List<AddressDTO>>getUserAddress()
-    {
+    public ResponseEntity<List<AddressDTO>> getUserAddress() {
         User user = authUtil.loggedInUser();
-        List<AddressDTO> addressList= addressService.getUserAddresses(user);
-        return new ResponseEntity<>(addressList, HttpStatus.FOUND);
+        List<AddressDTO> addressList = addressService.getUserAddresses(user.getUserId());
+        return ResponseEntity.ok(addressList);
     }
 
     @PutMapping("/addresses/{addressId}")
